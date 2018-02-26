@@ -68,7 +68,7 @@ while getopts "s::a:s:uphvj:" OPTION; do
 	    ;;
         j)
             JSON=1
-            IFS=":" JSON_ATTR=(${OPTARG})
+            IFS=":" JSON_ATTR=(${OPTARG//p=})
             ;;
 	a)
 	    ARGS[${#ARGS[*]}]=${OPTARG//p=}
@@ -93,7 +93,7 @@ if [[ -f "${SCRIPT%.sh}.sh" ]]; then
           IFS="|" values=(${line})
           output='{ '
           for val_index in ${!values[*]}; do
-             output+='"'{#${JSON_ATTR[${val_index}]}}'":"'${values[${val_index}]}'"'
+             output+='"'{#${JSON_ATTR[${val_index}]:-${val_index}}}'":"'${values[${val_index}]}'"'
              if (( ${val_index}+1 < ${#values[*]} )); then
                 output="${output}, "
              fi
