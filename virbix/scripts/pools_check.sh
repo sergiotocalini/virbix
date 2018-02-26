@@ -5,8 +5,8 @@ VIRSH="sudo `which virsh`"
 UUID="${1}"
 ATTR="${2}"
 TIMESTAMP=`date '+%s'`
-CACHE_DIR="${CACHE_DIR:-./var/cache}/pools"
-CACHE_FILE=${APP_DIR}/${CACHE_DIR}/${UUID}.xml
+CACHE_DIR="${APP_DIR}/${CACHE_DIR:-./var/cache}/pools"
+CACHE_FILE=${CACHE_DIR}/${UUID}.xml
 CACHE_TTL=5
 
 [ -d ${CACHE_DIR} ] || mkdir -p ${CACHE_DIR}
