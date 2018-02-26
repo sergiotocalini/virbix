@@ -50,9 +50,9 @@ version() {
     exit 1
 }
 
-check_params() {
+#check_params() {
 #    [[ -d ${HAPROXY_CACHE_DIR} ]] || mkdir -p ${HAPROXY_CACHE_DIR}
-}
+#}
 
 #
 #################################################################################

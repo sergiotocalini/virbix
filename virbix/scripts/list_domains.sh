@@ -1,5 +1,5 @@
 #!/usr/bin/env ksh
-for vm in `virsh list --uuid`; do
+for vm in `virsh list --all --uuid`; do
     output=""
     virsh dominfo ${vm} | while read line; do
        key=`echo ${line}|awk -F: '{print $1}'|awk '{$1=$1};1'`
