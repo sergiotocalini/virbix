@@ -9,20 +9,31 @@ CACHE_DIR="${APP_DIR}/${CACHE_DIR:-./var/cache}/pools"
 CACHE_FILE=${CACHE_DIR}/${UUID}.xml
 CACHE_TTL=5
 
-[ -d ${CACHE_DIR} ] || mkdir -p ${CACHE_DIR}
-
-if [[ -f ${CACHE_FILE} ]]; then
-   if [[ $(( `stat -c '%Y' "${CACHE_FILE}"`+60*${CACHE_TTL} )) -le ${TIMESTAMP} ]]; then
-      ${VIRSH} pool-dumpxml ${UUID} > ${CACHE_FILE}
-   fi
-else
-   ${VIRSH} pool-dumpxml ${UUID} > ${CACHE_FILE}
-fi
+refresh_cache() {
+    [ -d ${CACHE_DIR} ] || mkdir -p ${CACHE_DIR}
+    if [[ -f ${CACHE_FILE} ]]; then
+	if [[ $(( `stat -c '%Y' "${CACHE_FILE}"`+60*${CACHE_TTL} )) -le ${TIMESTAMP} ]]; then
+	    ${VIRSH} pool-dumpxml ${UUID} > ${CACHE_FILE}
+	fi
+    else
+	${VIRSH} pool-dumpxml ${UUID} > ${CACHE_FILE}
+    fi
+}
 
 if [[ ${ATTR} == 'size_used' ]]; then
-   rval=`xmllint --xpath "string(//allocation)" ${CACHE_FILE}`
+    refresh_cache
+    rval=`xmllint --xpath "string(//allocation)" ${CACHE_FILE}`
 elif [[ ${ATTR} == 'size_free' ]]; then
-   rval=`xmllint --xpath "string(//available)" ${CACHE_FILE}`
+    refresh_cache
+    rval=`xmllint --xpath "string(//available)" ${CACHE_FILE}`
+elif [[ ${ATTR} == 'state' ]]; then
+    ${VIRSH} pool-info ${UUID} | while read line; do
+	key=`echo ${line}|awk -F: '{print $1}'|awk '{$1=$1};1'`
+	val=`echo ${line}|awk -F: '{print $2}'|awk '{$1=$1};1'`
+	if [[ ${key} =~ ^(State)$ ]]; then
+            rval="${val}"
+	fi
+    done
 fi
 
 echo ${rval:-0}
