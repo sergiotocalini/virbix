@@ -1,7 +1,9 @@
 #!/usr/bin/env ksh
-for vm in `virsh list --all --uuid`; do
+
+${VIRSH}="sudo `which virsh`"
+for vm in `${VIRSH} list --all --uuid`; do
     output=""
-    virsh dominfo ${vm} | while read line; do
+    ${VIRSH} dominfo ${vm} | while read line; do
        key=`echo ${line}|awk -F: '{print $1}'|awk '{$1=$1};1'`
        val=`echo ${line}|awk -F: '{print $2}'|awk '{$1=$1};1'`
        if [[ ${key} =~ ^(Id|Name|UUID|OS Type|State)$ ]]; then
