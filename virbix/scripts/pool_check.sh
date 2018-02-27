@@ -27,13 +27,14 @@ elif [[ ${ATTR} == 'size_free' ]]; then
     refresh_cache
     rval=`xmllint --xpath "string(//available)" ${CACHE_FILE}`
 elif [[ ${ATTR} == 'state' ]]; then
-    ${VIRSH} pool-info ${UUID} | while read line; do
-	key=`echo ${line}|awk -F: '{print $1}'|awk '{$1=$1};1'`
-	val=`echo ${line}|awk -F: '{print $2}'|awk '{$1=$1};1'`
-	if [[ ${key} =~ ^(State)$ ]]; then
-            rval="${val}"
-	fi
-    done
+    rval="`${VIRSH} pool-info ${UUID}|grep '^ State:'|awk -F: '{print $2}'|awk '{$1=$1};1'`"
+    # ${VIRSH} pool-info ${UUID} | while read line; do
+    # 	key=`echo ${line}|awk -F: '{print $1}'|awk '{$1=$1};1'`
+    # 	val=`echo ${line}|awk -F: '{print $2}'|awk '{$1=$1};1'`
+    # 	if [[ ${key} =~ ^(State)$ ]]; then
+    #         rval="${val}"
+    # 	fi
+    # done
 fi
 
 echo ${rval:-0}
