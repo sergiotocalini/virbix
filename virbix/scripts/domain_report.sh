@@ -62,7 +62,7 @@ Size2Bytes() {
     echo "${size:-0}"
     return 0
 }
-
+display="json"
 cache=( $(refresh_cache "${UUID}") )
 headers[00]="ID"
 headers[01]="NAME"
@@ -76,15 +76,14 @@ headers[08]="STORAGE PHYSICAL"
 headers[09]="UUID"
 headers[10]="STATUS"
 for index in ${!ARGS[@]}; do
-    if [[ ${ARGS[${index}]} == '--with-table' ]]; then
+    if [[ ${ARGS[${index}]} == '--table' ]]; then
 	rval[${#rval[@]}]=`printf '%s|' "${headers[@]}"`
 	rval[${#rval[@]}]=`printf '%s|' "${headers[@]}" | sed -e 's/[a-zA-Z]/=/g' -e 's/ /=/g'`
 	display="table"
 	break
-    elif [[ ${ARGS[${index}]} == '--with-raw' ]]; then
+    elif [[ ${ARGS[${index}]} == '--raw' ]]; then
+	display="raw"
 	break
-    else
-	display="json"
     fi
 done
 fields[00]='domain/@id'
