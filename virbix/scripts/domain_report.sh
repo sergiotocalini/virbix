@@ -7,7 +7,7 @@ TIMESTAMP=`date '+%s'`
 
 VIRSH="sudo `which virsh`"
 ARGS=( "${@}" )
-UUID="${1}"
+UUID="${1:-all}"
 
 [ -d ${SCRIPT_CACHE} ] || mkdir -p ${SCRIPT_CACHE}
 
