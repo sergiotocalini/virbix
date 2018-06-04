@@ -10,5 +10,5 @@ if [[ ${SECTION} == "all" ]]; then
     domains=`${SCRIPT_DIR}/report_domains.sh all source`
     pools=`${SCRIPT_DIR}/report_pools.sh all source`
 
-    jq -s '.[0]*.[1]*.[2]' "${node}" "${domains}" "${pools}"
+    jq -s add "${node}" "${domains}" "${pools}"
 fi
