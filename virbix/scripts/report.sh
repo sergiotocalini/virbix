@@ -6,9 +6,9 @@ TIMESTAMP=`date '+%s'`
 SECTION="${1:-all}"
 
 if [[ ${SECTION} == "all" ]]; then
-    node=`${SCRIPT_DIR}/node_report.sh all source`
-    domains=`${SCRIPT_DIR}/domain_report.sh all source`
-    pools=`${SCRIPT_DIR}/pool_report.sh all source`
+    node=`${SCRIPT_DIR}/report_node.sh all source`
+    domains=`${SCRIPT_DIR}/report_domains.sh all source`
+    pools=`${SCRIPT_DIR}/report_pools.sh all source`
 
     jq -s '.[0]*.[1]*.[2]' "${node}" "${domains}" "${pools}"
 fi
