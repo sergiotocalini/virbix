@@ -37,6 +37,7 @@ keys[10]='storage_capacity|0'
 keys[11]='storage_physical|0'
 keys[12]='uuid|/domain/uuid'
 keys[13]='status|0'
+keys[14]='autostart|0'
 
 for idx in ${!keys[@]}; do
     xmlvalue=`echo "${keys[${idx}]}" | awk -F'|' '{print $2}'`
@@ -63,7 +64,9 @@ for index in ${!doms_xml[@]}; do
 	data[10]=$(( ${data[10]}+${storage_capac:-0} ))
 	data[11]=$(( ${data[11]}+${storage_physi:-0} ))
     done
-    data[13]=`${VIRSH} domstate ${data[12]}`
+    dominfo=`${VIRSH} dominfo ${data[12]} 2>/dev/null`
+    data[13]=`echo "${dominfo}" | grep -E "^State:" | awk -F':' '{print $2}' | awk '{$1=$1};1'`
+    data[14]=`echo "${dominfo}" | grep -E "^Autostart:" | awk -F':' '{print $2}' | awk '{$1=$1};1'`
 
     rval[${#rval[@]}]=` printf '%s|' "${data[@]}"`
 done
