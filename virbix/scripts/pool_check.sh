@@ -20,12 +20,13 @@ refresh_cache() {
     fi
 }
 
+refresh_cache
 if [[ ${ATTR} == 'size_used' ]]; then
-    refresh_cache
     rval=`xmllint --xpath "string(//pool/allocation)" ${CACHE_FILE}`
 elif [[ ${ATTR} == 'size_free' ]]; then
-    refresh_cache
     rval=`xmllint --xpath "string(//pool/available)" ${CACHE_FILE}`
+elif [[ ${ATTR} == 'size_total' ]]; then
+    rval=`xmllint --xpath "string(//pool/capacity)" ${CACHE_FILE}`
 elif [[ ${ATTR} == 'state' ]]; then
     rval="`${VIRSH} pool-info ${UUID}|grep '^State:'|awk -F: '{print $2}'|awk '{$1=$1};1'`"
 fi
