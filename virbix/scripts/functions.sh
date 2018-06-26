@@ -96,20 +96,13 @@ Size2Bytes() {
 	multi=1000
     fi
     
-    if [[ ${size} > ${multi} ]]; then
-	index=0
-	for u in ${!table[@]}; do
-	    if [[ ${unit} == ${table[${index}]} ]]; then
-		break
-	    fi
-	    let "index=index+1"
-	done
+    for idx in ${!table[@]}; do
+	size=$(( ${size}*${multi} ))
+	if [[ ${unit} == ${table[${idx}]} ]]; then
+	    break
+	fi
+    done
 	
-	while (( ${index} >= 0 )); do
-	    size=$(( ${size}*${multi} ))
-	    let "index=index-1"
-	done
-    fi
     echo "${size:-0}"
     return 0
 }
