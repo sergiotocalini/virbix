@@ -1,6 +1,6 @@
 #!/usr/bin/env ksh
 
-VIRSH="sudo `which virsh`"
+VIRSH="`which virsh`"
 UUID="${1}"
 ATTR="${2}"
 

@@ -28,6 +28,8 @@ LIBVIRT_URI|qemu:///system
 
 ## Zabbix
 
+Add zabbix user in libvirt group (mandatory for running virsh command without sudo).
+
     #~ git clone https://github.com/sergiotocalini/virbix.git
     #~ sudo ./virbix/deploy_zabbix.sh "<LIBVIRT_URI>"
     #~ sudo systemctl restart zabbix-agent

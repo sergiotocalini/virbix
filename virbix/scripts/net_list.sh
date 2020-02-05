@@ -1,6 +1,6 @@
 #!/usr/bin/env ksh
 
-VIRSH="sudo `which virsh`"
+VIRSH="`which virsh`"
 for net in `${VIRSH} net-list --all --uuid | sort | uniq`; do
     output=""
     ${VIRSH} net-info ${net} | while read line; do

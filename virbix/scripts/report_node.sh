@@ -10,7 +10,7 @@ TIMESTAMP=`date '+%s'`
 
 IFS_DEFAULT="${IFS}"
 
-VIRSH="sudo `which virsh`"
+VIRSH="`which virsh`"
 UUID="${1:-all}"
 TYPE="${2:-json}"
 
