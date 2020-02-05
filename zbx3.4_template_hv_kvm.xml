@@ -87,14 +87,17 @@
                             <description>Is the domain running or not&#13;
 0 - running&#13;
 1 - paused&#13;
-2 - shut off</description>
+2 - shut off&#13;
+3 - unknown</description>
                             <inventory_link>0</inventory_link>
                             <applications>
                                 <application>
                                     <name>KVM</name>
                                 </application>
                             </applications>
-                            <valuemap/>
+                            <valuemap>
+                                <name>VIRSH Domain State</name>
+                            </valuemap>
                             <logtimefmt/>
                             <preprocessing/>
                             <jmx_endpoint/>
@@ -357,7 +360,9 @@
                                     <name>KVM</name>
                                 </application>
                             </applications>
-                            <valuemap/>
+                            <valuemap>
+                                <name>VIRSH Domain State</name>
+                            </valuemap>
                             <logtimefmt/>
                             <preprocessing/>
                             <jmx_endpoint/>
@@ -439,4 +444,27 @@
             <screens/>
         </template>
     </templates>
+    <value_maps>
+        <value_map>
+            <name>VIRSH Domain State</name>
+            <mappings>
+                <mapping>
+                    <value>0</value>
+                    <newvalue>running</newvalue>
+                </mapping>
+                <mapping>
+                    <value>1</value>
+                    <newvalue>paused</newvalue>
+                </mapping>
+                <mapping>
+                    <value>2</value>
+                    <newvalue>shut off</newvalue>
+                </mapping>
+                <mapping>
+                    <value>3</value>
+                    <newvalue>unknown</newvalue>
+                </mapping>
+            </mappings>
+        </value_map>
+    </value_maps>
 </zabbix_export>

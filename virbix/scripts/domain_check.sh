@@ -5,7 +5,21 @@ UUID="${1}"
 ATTR="${2}"
 
 if [[ ${ATTR} == 'state' ]]; then
-    ${VIRSH} domstate ${UUID}|sed '/^\s*$/d'
+    state=`${VIRSH} domstate ${UUID}|sed '/^\s*$/d'`
+    case $state in
+    "running")
+      echo "0"
+      ;;
+    "paused")
+      echo "1"
+      ;;
+    "shut off")
+      echo "2"
+      ;;
+    *)
+      echo "3"
+      ;;
+    esac
 elif [[ ${ATTR} == 'json' ]]; then
     dump=`${VIRSH} dumpxml ${UUID}`
     memory=`echo "${xml}" | xmlstarlet sel -q -T -t -m "domain/memory" -v . -n`
