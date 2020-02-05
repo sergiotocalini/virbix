@@ -1,7 +1,7 @@
 #!/usr/bin/env ksh
 
 APP_DIR=$(dirname $0)
-VIRSH="sudo `which virsh`"
+VIRSH="`which virsh`"
 UUID="${1}"
 ATTR="${2}"
 TIMESTAMP=`date '+%s'`
@@ -28,7 +28,21 @@ elif [[ ${ATTR} == 'size_free' ]]; then
 elif [[ ${ATTR} == 'size_total' ]]; then
     rval=`xmllint --xpath "string(//pool/capacity)" ${CACHE_FILE}`
 elif [[ ${ATTR} == 'state' ]]; then
-    rval="`${VIRSH} pool-info ${UUID}|grep '^State:'|awk -F: '{print $2}'|awk '{$1=$1};1'`"
+    state="`${VIRSH} pool-info ${UUID}|grep '^State:'|awk -F: '{print $2}'|awk '{$1=$1};1'`"
+    case $state in
+    "running")
+      rval="0"
+      ;;
+    "paused")
+      rval="1"
+      ;;
+    "shut off")
+      rval="2"
+      ;;
+    *)
+      rval="3"
+      ;;
+    esac
 fi
 
 echo ${rval:-0}
