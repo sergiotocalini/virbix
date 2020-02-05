@@ -1,7 +1,7 @@
 #!/usr/bin/env ksh
 
 APP_DIR=$(dirname $0)
-VIRSH="sudo `which virsh`"
+VIRSH="`which virsh`"
 UUID="${1}"
 ATTR="${2}"
 TIMESTAMP=`date '+%s'`

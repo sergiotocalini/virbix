@@ -1,6 +1,6 @@
 #!/usr/bin/env ksh
 
-VIRSH="sudo `which virsh`"
+VIRSH="`which virsh`"
 for vm in `${VIRSH} pool-list --all | egrep -v "(^-.*|^ Name.*|^$)" | awk '{print $1}' | sort | uniq`; do
     output=""
     ${VIRSH} pool-info ${vm} | while read line; do
