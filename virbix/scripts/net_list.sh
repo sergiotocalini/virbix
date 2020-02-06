@@ -1,7 +1,7 @@
 #!/usr/bin/env ksh
 
-VIRSH="sudo `which virsh`"
-for net in `${VIRSH} net-list --all --uuid | sort | uniq`; do
+VIRSH="`which virsh`"
+for net in `${VIRSH} net-list --all | sed 1,2d | sed '/^$/d' | cut -d' ' -f 2 | uniq`; do
     output=""
     ${VIRSH} net-info ${net} | while read line; do
        key=`echo ${line}|awk -F: '{print $1}'|awk '{$1=$1};1'`

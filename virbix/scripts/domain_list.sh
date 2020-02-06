@@ -1,6 +1,6 @@
 #!/usr/bin/env ksh
 
-VIRSH="sudo `which virsh`"
+VIRSH="`which virsh`"
 for vm in `${VIRSH} list --all --uuid | sort | uniq`; do
     output=""
     ${VIRSH} dominfo ${vm} | while read line; do
