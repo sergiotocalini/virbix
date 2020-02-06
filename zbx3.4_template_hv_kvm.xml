@@ -169,7 +169,7 @@
                             <history>7d</history>
                             <trends>0</trends>
                             <status>0</status>
-                            <value_type>1</value_type>
+                            <value_type>3</value_type>
                             <allowed_hosts/>
                             <units/>
                             <snmpv3_contextname/>
@@ -189,15 +189,17 @@
                             <port/>
                             <description>Is the network up or not&#13;
 0 - No&#13;
-1 - Yes</description>
+1 - Yes&#13;
+2 - Unknown</description>
                             <inventory_link>0</inventory_link>
                             <applications>
                                 <application>
                                     <name>KVM</name>
                                 </application>
                             </applications>
-                            <valuemap/>
-                            <logtimefmt/>
+                            <valuemap>
+                                <name>Is Network Active</name>
+                            </valuemap>                            <logtimefmt/>
                             <preprocessing/>
                             <jmx_endpoint/>
                             <application_prototypes/>
@@ -462,6 +464,23 @@
                 </mapping>
                 <mapping>
                     <value>3</value>
+                    <newvalue>unknown</newvalue>
+                </mapping>
+            </mappings>
+        </value_map>
+        <value_map>
+            <name>Is Network Active</name>
+            <mappings>
+                <mapping>
+                    <value>0</value>
+                    <newvalue>no</newvalue>
+                </mapping>
+                <mapping>
+                    <value>1</value>
+                    <newvalue>yes</newvalue>
+                </mapping>
+                <mapping>
+                    <value>2</value>
                     <newvalue>unknown</newvalue>
                 </mapping>
             </mappings>

@@ -27,7 +27,18 @@ elif [[ ${ATTR} == 'mac_addr' ]]; then
     refresh_cache
     rval=`xmllint --xpath "string(//network/mac/@address)" ${CACHE_FILE}`
 elif [[ ${ATTR} == 'active' ]]; then
-    rval="`${VIRSH} net-info ${UUID}|grep '^Active:'|awk -F: '{print $2}'|awk '{$1=$1};1'`"
+    activate="`${VIRSH} net-info ${UUID}|grep '^Active:'|awk -F: '{print $2}'|awk '{$1=$1};1'`"
+    case $activate in
+    "no")
+      rval="0"
+      ;;
+    "yes")
+      rval="1"
+      ;;
+    *)
+      rval="2"
+      ;;
+    esac
 fi
 
 echo ${rval:-0}
