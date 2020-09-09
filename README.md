@@ -1,7 +1,7 @@
 # virbix
 Zabbix KVM Monitoring
 
-This script is part of a monitoring solution that allows monitoring several
+This script is part of a monitoring solution that allows to monitor several
 services and applications.
 
 For more information about this monitoring solution please check out this post
