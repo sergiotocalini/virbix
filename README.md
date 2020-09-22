@@ -1,5 +1,5 @@
 # virbix
-Zabbix KVM Monitoring
+KVM Monitoring
 
 This script is part of a monitoring solution that allows to monitor several
 services and applications.
@@ -45,3 +45,13 @@ the same directory than the script.*
 *__Note:__ the installation has to be executed on the zabbix agent host and you have
 to import the template on the zabbix web. The default installation directory is
 /etc/zabbix/scripts/agentd/virbix*
+
+# Usage
+
+```bash
+~# /etc/zabbix/scripts/agentd/virbix/virbix.sh -s domain_list -j DOMID:DOMNAME:DOMUUID:DOMTYPE:DOMSTATE
+{
+   ...
+}
+~#
+```
